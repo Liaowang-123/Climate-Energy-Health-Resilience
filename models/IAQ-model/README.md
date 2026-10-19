@@ -4,7 +4,7 @@ This repository contains a research prototype for evaluating indoor air quality 
 
 The main notebook is:
 
-- `Wellcome_Trust_WindowAC.ipynb`
+- `Indoor_Air_Quality_model.ipynb`
 
 The notebook combines a Window AC control optimization model with IAQ simulations for CO2 and VOC concentrations. It is intended to support transparent review of the modeling workflow, assumptions, and results.
 
@@ -50,6 +50,8 @@ The goal is not to optimize only one metric, but to understand how energy use, c
 
 ## Main dependencies
 
+Run from the repository root or the notebook directory. The notebook loads the external calibration input by a path relative to the current working directory; keep the parameter file alongside the notebook and launch Jupyter from that directory, or pass an explicit path. The parameter file must use one `name = value` entry per line, with values expressed as numeric literals or supported `math`/`numpy` expressions. All referenced model parameters are required. The repository does not contain a calibration file or example calibration values.
+
 The notebook uses the following Python packages:
 
 - `gurobipy`
@@ -79,9 +81,11 @@ Gurobi also needs to be installed and licensed separately. Please refer to the o
 ## How to run
 
 1. Clone or download the repository.
-2. Place inputfile in the same folder as `Wellcome_Trust_0505.ipynb`.
-3. Open the notebook in Jupyter Notebook.
-4. Run the notebook cells from top to bottom.
+2. Provide the original calibrated parameter file, `05282025_test.txt`, in the same directory as the notebook, or pass its path to `load_params("path/to/parameters.txt")` in the parameter-loading cell. This file is not tracked in this repository; obtain the authorized project input from its maintainer. Do not substitute guessed calibration values.
+3. Open `models/IAQ-model/Indoor_Air_Quality_model.ipynb` in Jupyter Notebook or JupyterLab.
+4. Run the notebook cells from top to bottom. The loader checks for the parameter file, parse errors, duplicate keys, and all required parameters, and reports actionable errors.
+
+The optimization cells require a working Gurobi installation and a valid license. Without the parameter file and Gurobi license, the full scenario analysis cannot run.
 
 The notebook will:
 
